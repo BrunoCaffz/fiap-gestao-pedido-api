@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36623.8 d17.14
+VisualStudioVersion = 17.14.36623.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestaoResiduosAPI", "GestaoResiduosAPI\GestaoResiduosAPI.csproj", "{6D474A5C-FD6D-48B1-A146-2E9E96E20434}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestaoResiduosAPI.Tests", "GestaoResiduosAPI.Tests\GestaoResiduosAPI.Tests.csproj", "{CD80670F-5188-4421-97FD-1C76FEE1D7FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{6D474A5C-FD6D-48B1-A146-2E9E96E20434}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D474A5C-FD6D-48B1-A146-2E9E96E20434}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D474A5C-FD6D-48B1-A146-2E9E96E20434}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD80670F-5188-4421-97FD-1C76FEE1D7FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD80670F-5188-4421-97FD-1C76FEE1D7FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD80670F-5188-4421-97FD-1C76FEE1D7FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD80670F-5188-4421-97FD-1C76FEE1D7FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
