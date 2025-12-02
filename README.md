@@ -65,5 +65,137 @@ docker compose up
 
 ### 📁 4. Acesse a API
 Após iniciar os containers, a API estará disponível em:
-- ** http://localhost:8080/swagger
+- **Link** → http://localhost:8080/swagger
 Lá você poderá testar todos os endpoints diretamente pelo Swagger UI.
+
+---
+
+# Endpoints da API
+
+## 1. **Autenticação**
+
+### POST `/auth/login`
+Gera um token JWT para acessar endpoints protegidos.
+
+#### 📥 Exemplo de Request
+
+```json
+{
+  "username": "admin",
+  "password": "123"
+}
+```
+### Exemplo de Response
+```json
+{
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6Ikp..."
+}
+}
+```
+
+## 2. **Coletas**
+Gerencia os registros de coleta de resíduos, gerando alertas automáticos caso o peso exceda o limite do ponto de coleta.
+
+### POST `/Coletas`
+Cria uma nova coleta. Se ultrapassar o limite, um alerta automático é criado.
+
+#### 📥 Exemplo de Request
+```json
+{
+  "residuoId": 1,
+  "pontoColetaId": 1,
+  "veiculoId": 1,
+  "coletorId": 1,
+  "pesoKg": 80
+}
+```
+
+### Exemplo de Response
+```json
+{
+  "id": 1,
+  "dataHora": "2025-11-29T01:20:00Z",
+  "pesoKg": 80,
+  "residuoId": 1,
+  "pontoColetaId": 1,
+  "veiculoId": 1,
+  "coletorId": 1
+}
+```
+
+### GET /Coletas
+Lista as coletas com paginação.
+
+### Exemplo de Response
+```json
+{
+  "page": 1,
+  "pageSize": 10,
+  "totalItems": 3,
+  "totalPages": 1,
+  "data": [
+    {
+      "id": 1,
+      "residuo": "Plástico",
+      "ponto": "Ponto Central",
+      "veiculo": "ABC-1234",
+      "coletor": "João da Silva",
+      "pesoKg": 80,
+      "dataHora": "2025-11-29T01:20:00Z"
+    }
+  ]
+}
+```
+
+### GET /Coletas{id}
+Retorna o detalhe de uma coleta específica.
+#### Exemplo: GET /Coletas/1
+
+---
+
+## 3. **Alertas**
+Alertas são criados automaticamente quando o peso de uma coleta ultrapassa o limite do ponto de coleta.
+
+### GET /Coletas
+Retorna todos os alertas gerados no sistema.
+
+### Exemplo de Response
+```json
+[
+  {
+    "id": 1,
+    "pontoColetaId": 1,
+    "mensagem": "Limite de 100 kg excedido! Peso coletado: 120 kg.",
+    "dataHora": "2025-11-29T02:10:00Z"
+  }
+]
+```
+
+---
+
+## 3. **Rotas**
+Calcula uma rota otimizada entre pontos de coleta.
+
+#### 📥 Exemplo de Request
+
+```json
+{
+  "pontos": [
+    { "id": 1, "latitude": -23.5, "longitude": -46.6 },
+    { "id": 2, "latitude": -23.6, "longitude": -46.65 }
+  ]
+}
+```
+
+### Exemplo de Response
+```json
+{
+  "distanciaTotalKm": 5.3,
+  "estimativaTempoMin": 9,
+  "ordemColeta": [1, 2]
+}
+```
+
+---
+
