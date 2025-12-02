@@ -8,7 +8,7 @@ namespace GestaoResiduosAPI.Models
 
         [Required]
         [MaxLength(50)]
-        public string Tipo { get; set; } // Papel, Metal, Plástico, Orgânico...
+        public string Tipo { get; set; } 
 
         [MaxLength(200)]
         public string Descricao { get; set; }

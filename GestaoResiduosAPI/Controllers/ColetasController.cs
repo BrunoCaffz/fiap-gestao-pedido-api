@@ -1,5 +1,6 @@
 ﻿using GestaoResiduosAPI.Services;
 using GestaoResiduosAPI.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestaoResiduosAPI.Controllers
@@ -16,6 +17,7 @@ namespace GestaoResiduosAPI.Controllers
         }
 
         // POST /coletas
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Registrar([FromBody] ColetaCreateViewModel model)
         {
@@ -29,12 +31,18 @@ namespace GestaoResiduosAPI.Controllers
 
         // GET /coletas/{id}
         [HttpGet("{id}")]
-        public IActionResult Obter(int id)
+        public async Task<IActionResult> Obter(int id)
         {
-            return Ok(new { message = "Endpoint de detalhe ainda não implementado." });
+            var coleta = await _coletaService.ObterPorIdAsync(id);
+
+            if (coleta == null)
+                return NotFound(new { message = "Coleta não encontrada." });
+
+            return Ok(coleta);
         }
 
         // GET /coletas?page=1&pageSize=10
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Listar([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
@@ -48,6 +56,14 @@ namespace GestaoResiduosAPI.Controllers
                 totalPages = (int)Math.Ceiling((double)totalItems / pageSize),
                 data = dados
             });
+        }
+
+        [Authorize]
+        [HttpGet("paginado")]
+        public async Task<IActionResult> ListarPaginado([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        {
+            var resultado = await _coletaService.ListarPaginadoAsync(page, pageSize);
+            return Ok(resultado);
         }
     }
 }
