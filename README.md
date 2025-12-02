@@ -1,4 +1,4 @@
-# 🌱 Gestão de Resíduos – API ESG com .NET 8
+# Gestão de Resíduos – API ESG com .NET 8
 
 API RESTful desenvolvida em **.NET 8** para gestão de resíduos sólidos, com foco em um cenário ESG: controle de coletas, pontos de coleta, resíduos, veículos e coletores, com autenticação JWT, paginação e boas práticas de arquitetura.
 
@@ -16,7 +16,7 @@ O projeto simula uma solução de gestão de resíduos para apoiar empresas/muni
 
 ---
 
-##Arquitetura e Organização
+## Arquitetura e Organização
 
 A solução segue uma arquitetura em camadas, alinhada ao padrão de separação de responsabilidades:
 
@@ -29,7 +29,7 @@ A solução segue uma arquitetura em camadas, alinhada ao padrão de separação
 
 ---
 
-## 🛠 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 - **.NET 8 / ASP.NET Core 8**
 - **Entity Framework Core 8**
@@ -42,18 +42,27 @@ A solução segue uma arquitetura em camadas, alinhada ao padrão de separação
 
 ---
 
-## 🔐 Autenticação (JWT)
+## Como rodar o projeto (Docker)
 
-A autenticação é feita via **JWT Bearer**.
+Siga os passos abaixo para iniciar a API localmente utilizando Docker:
 
-### Configuração
+---
 
-As configurações ficam em `appsettings.json`:
+### 🔧 1. Certifique-se de que o **Docker Desktop** está instalado e em execução  
+Sem ele, o container não sobe!
 
-```json
-"JwtSettings": {
-  "SecretKey": "SUA_CHAVE_SECRETA_AQUI_GRANDE_O_SUFICIENTE",
-  "ExpirationMinutes": 60,
-  "Issuer": "GestaoResiduosAPI",
-  "Audience": "GestaoResiduosAPIUsers"
-}
+### 📁 2. Acesse a pasta raiz do projeto
+
+```bash
+cd GestaoResiduosAPI
+
+### 📁 3. Execute os comandos Docker
+```bash
+docker compose build
+docker compose up
+
+
+### 📁 4. Acesse a API
+Após iniciar os containers, a API estará disponível em:
+- **http://localhost:8080/swagger
+Lá você poderá testar todos os endpoints diretamente pelo Swagger UI.
