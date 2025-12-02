@@ -16,10 +16,8 @@ namespace GestaoResiduosAPI.Services
             _alertaService = alertaService;
         }
 
-        // Criar coleta
         public async Task<Coleta> RegistrarColetaAsync(ColetaCreateViewModel model)
         {
-            // Verifica se o ponto existe
             var ponto = await _db.PontosColeta.FirstOrDefaultAsync(p => p.Id == model.PontoColetaId);
             if (ponto == null)
                 throw new Exception("Ponto de coleta não encontrado.");
@@ -79,6 +77,74 @@ namespace GestaoResiduosAPI.Services
                 .ToListAsync();
 
             return (dados, totalItems);
+        }
+
+        public async Task<PagedResult<ColetaListViewModel>> ListarPaginadoAsync(int page, int pageSize)
+        {
+            if (page <= 0) page = 1;
+            if (pageSize <= 0) pageSize = 10;
+
+            var query = _db.Coletas
+                .AsNoTracking()
+                .Include(c => c.Residuo)
+                .Include(c => c.PontoColeta)
+                .Include(c => c.Veiculo)
+                .Include(c => c.Coletor)
+                .OrderByDescending(c => c.DataHora);
+
+            var totalItems = await query.CountAsync();
+
+            var dados = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(c => new ColetaListViewModel
+                {
+                    Id = c.Id,
+                    Residuo = c.Residuo.Tipo,
+                    Ponto = c.PontoColeta.Nome,
+                    Veiculo = c.Veiculo.Placa,
+                    Coletor = c.Coletor.Nome,
+                    PesoKg = c.PesoKg,
+                    DataHora = c.DataHora
+                })
+                .ToListAsync();
+
+            return new PagedResult<ColetaListViewModel>
+            {
+                Items = dados,
+                Page = page,
+                PageSize = pageSize,
+                TotalItems = totalItems,
+                TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize)
+            };
+        }
+    
+
+    public async Task<ColetaDetalheViewModel?> ObterPorIdAsync(int id)
+        {
+            var coleta = await _db.Coletas
+                .AsNoTracking()
+                .Include(c => c.Residuo)
+                .Include(c => c.PontoColeta)
+                .Include(c => c.Veiculo)
+                .Include(c => c.Coletor)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (coleta == null)
+                return null;
+
+            return new ColetaDetalheViewModel
+            {
+                Id = coleta.Id,
+                DataHora = coleta.DataHora,
+                PesoKg = coleta.PesoKg,
+                Residuo = coleta.Residuo.Tipo,
+                PontoColeta = coleta.PontoColeta.Nome,
+                LimiteKgPonto = coleta.PontoColeta.LimiteKg,
+                Veiculo = coleta.Veiculo.Placa,
+                Coletor = coleta.Coletor.Nome,
+                ExcedeuLimite = coleta.PesoKg > coleta.PontoColeta.LimiteKg
+            };
         }
     }
 }
