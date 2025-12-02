@@ -4,7 +4,7 @@ API RESTful desenvolvida em **.NET 8** para gestão de resíduos sólidos, com f
 
 ---
 
-##Objetivo do Projeto
+## Objetivo do Projeto
 
 O projeto simula uma solução de gestão de resíduos para apoiar empresas/municípios a:
 
