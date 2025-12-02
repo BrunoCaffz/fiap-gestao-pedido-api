@@ -65,5 +65,5 @@ docker compose up
 
 ### 📁 4. Acesse a API
 Após iniciar os containers, a API estará disponível em:
-- **http://localhost:8080/swagger
+- ** http://localhost:8080/swagger
 Lá você poderá testar todos os endpoints diretamente pelo Swagger UI.
