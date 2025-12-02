@@ -55,12 +55,13 @@ Sem ele, o container não sobe!
 
 ```bash
 cd GestaoResiduosAPI
+```
 
 ### 📁 3. Execute os comandos Docker
 ```bash
 docker compose build
 docker compose up
-
+```
 
 ### 📁 4. Acesse a API
 Após iniciar os containers, a API estará disponível em:
