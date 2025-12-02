@@ -88,9 +88,7 @@ Gera um token JWT para acessar endpoints protegidos.
 ### Exemplo de Response
 ```json
 {
-{
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6Ikp..."
-}
 }
 ```
 
